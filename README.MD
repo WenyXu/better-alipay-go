@@ -103,7 +103,7 @@ func main(){
 
 ## Global Configuration
 
-You can use following functions to configure global configuration
+You can use following functions to configure global configuration.
 
 ```go
 package main
@@ -140,7 +140,7 @@ func main() {
 
 ```
 
-After above configuring, options.newOptions will return new Options with your configured
+After above configuring, options.newOptions will return new Options with your configured.
 
 ```go
 // options.go 
@@ -161,7 +161,7 @@ func newOptions(opts ...Option) Options {
 
 ## Dynamic Configuration
 
-If your application have multiple configurations, you can configure configuration dynamically
+If your application have multiple configurations, you can configure configuration dynamically.
 
 When you call Request func, it will make a copy form your current Options, then modify the Options. generally, it will be thread-safe.
 
@@ -209,7 +209,7 @@ func main(){
 ```
 
 ### Advanced Usage
-Configure with func which implement options.Option
+Configure with func which implement options.Option.
 ```go
     // implement options.Option
     // type Option func(*Options)
@@ -244,7 +244,7 @@ Configure with func which implement options.Option
     
     
 ```
-Use a client without default app configuration and configure per request
+Use a client without default app configuration and configure per request.
 ```go
 package main
 import (
@@ -283,7 +283,7 @@ func main(){
 
 ```
 
-Load configuration form database or somewhere, and configure dynamically at per request
+Load configuration form database or somewhere, and configure dynamically at per request.
 ```go
 package main
 import (
@@ -326,9 +326,8 @@ func main()  {
 ```
 
 ## Hooks
-In Options, we provide hooks which run before request started, and after received response, so you can do something what you like, it is just similar to web middleware
-
-We provide a sample here, help you create a image
+In Options, we provide hooks which run before request started, and after received response, so you can do something what you like, it is just similar to web middleware.
+We provide a sample here, help you have a concept.
 
 ```go
 // options.go
@@ -358,7 +357,7 @@ func DefaultAfterFunc(ctx context.Context, resp *http.Response) context.Context 
 
 ```
 
-The Request fun will run before-hooks before the request started, and run after-hook when received response
+The Request fun will run before-hooks before the request started, and run after-hook when received response.
 
 ```go
 //alipay.go
@@ -392,7 +391,7 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
 ```
 
 ## Tracing
-You can inject context, when you call a Request func, and use hook to finish the tracing
+You can inject context, when you call a Request func, and use hook to finish the tracing.
 
 ```go
 package main
