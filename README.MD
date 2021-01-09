@@ -326,7 +326,7 @@ func main()  {
 ```
 
 ## Hooks
-In Options, we provide hooks which run before request started, and after received response, so you can do something what you like, it is just similar to web middleware.
+In Options, we provide hooks which run before request started, and after response received, so you can do something like inject context, tracing's span etc. it is just similar to web middleware.
 We provide a sample here, help you have a concept.
 
 ```go
@@ -357,7 +357,7 @@ func DefaultAfterFunc(ctx context.Context, resp *http.Response) context.Context 
 
 ```
 
-The Request fun will run before-hooks before the request started, and run after-hook when received response.
+The Request fun will run before-hooks before the request started, and run after-hook after response received.
 
 ```go
 //alipay.go
@@ -367,7 +367,7 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
     
     ...
     
-    // run before hooks before start request
+    // run before hooks before request started
     for _, f := range copyOpts.Before {
         ctx = f(ctx, req)
     }
@@ -380,7 +380,7 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
     
     ...
     
-    // run after hooks after received response
+    // run after hooks after response received
     for _, f := range copyOpts.After {
         ctx = f(ctx, resp)
     }
