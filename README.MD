@@ -82,13 +82,13 @@ func main(){
     // of course, you can using a struct instead
     // var resp AlipayTradeCreateResponse
     resp := make(map[string]interface{})
-	s.Request("alipay.trade.create",m.NewMap(func(param m.M) {
-		param.
-			Set("subject", "网站测试支付").
-			Set("buyer_id", "2088802095984694").
-			Set("out_trade_no", "123456786543").
-			Set("total_amount", "88.88")
-	}), &resp)
+    s.Request("alipay.trade.create",m.NewMap(func(param m.M) {
+          param.
+              Set("subject", "网站测试支付").
+              Set("buyer_id", "2088802095984694").
+              Set("out_trade_no", "123456786543").
+              Set("total_amount", "88.88"),
+    }), &resp)
 	
 }
     
@@ -185,11 +185,11 @@ func main(){
     // var resp AlipayTradeCreateResponse
     resp := make(map[string]interface{})
 	s.Request("alipay.trade.create",m.NewMap(func(param m.M) {
-		param.
-			Set("subject", "网站测试支付").
-			Set("buyer_id", "2088802095984694").
-			Set("out_trade_no", "123456786543").
-			Set("total_amount", "88.88")
+            param.
+                Set("subject", "网站测试支付").
+                Set("buyer_id", "2088802095984694").
+                Set("out_trade_no", "123456786543").
+                Set("total_amount", "88.88")
 	    }),
 	    &resp,
 	    // dynamic configuration
@@ -219,15 +219,15 @@ func main(){
         )
         // or use custom option in Request of MakeParam func 
         s.Request("alipay.trade.create",m.NewMap(func(param m.M) {
-                param.
-                Set("subject", "网站测试支付").
-                Set("buyer_id", "2088802095984694").
-                Set("out_trade_no", "123456786543").
-                Set("total_amount", "88.88")
-            }),
-            &resp,
-            // your custom option
-            CustomOption,
+              param.
+              Set("subject", "网站测试支付").
+              Set("buyer_id", "2088802095984694").
+              Set("out_trade_no", "123456786543").
+              Set("total_amount", "88.88")
+          }),
+          &resp,
+          // your custom option
+          CustomOption,
         )
     }   
     ...
@@ -262,14 +262,14 @@ func main(){
 	    }),
 	    &resp,
 	    // dynamic configuration pre Request func
-		options.AppId(os.Getenv("APP_ID")),
-		options.PrivateKey(os.Getenv("PrivateKey")),
-		options.AppCertPath("./cert_file/appCertPublicKey.crt"),
-		options.RootCertPath("./cert_file/alipayRootCert.crt"),
-		options.PublicCertPath("./cert_file/alipayCertPublicKey_RSA2.crt"),
-		options.Production(false),
-		options.PrivateKeyType(global.PKCS8),
-		options.SignType(global.RSA2),
+	    options.AppId(os.Getenv("APP_ID")),
+	    options.PrivateKey(os.Getenv("PrivateKey")),
+	    options.AppCertPath("./cert_file/appCertPublicKey.crt"),
+            options.RootCertPath("./cert_file/alipayRootCert.crt"),
+            options.PublicCertPath("./cert_file/alipayCertPublicKey_RSA2.crt"),
+            options.Production(false),
+            options.PrivateKeyType(global.PKCS8),
+            options.SignType(global.RSA2),
 	)
 }
 
@@ -361,7 +361,7 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
     
     // run before hooks before start request
     for _, f := range copyOpts.Before {
-    ctx = f(ctx, req)
+        ctx = f(ctx, req)
     }
     
     ...
@@ -374,7 +374,7 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
     
     // run after hooks after received response
     for _, f := range copyOpts.After {
-    ctx = f(ctx, resp)
+        ctx = f(ctx, resp)
     }
     
     ...
@@ -409,24 +409,24 @@ func main() {
 			Set("out_trade_no", "123456786543").
 			Set("total_amount", "88.88")
 	}),
-		&resp,
-		// inject you tracing context
-		func(trace opentracing.Tracer) options.Option {
-			return func(o options.Options) {
-				sp := opentracing.StartSpan("tarcing name")
-				// injected
-				o.Context = context.WithValue(o.Context,"span-key",sp)
-			}
-		}(trace),
-		// handle span finish
-		options.AppendAfterFunc(func(c context.Context, response *http.Response) context.Context {
-			sp, ok := c.Get("span-key")
-			if ok {
-				// span finish
-				sp.Finish()
-			}
-			return c
-		}),
+	&resp,
+	// inject you tracing context
+	func(trace opentracing.Tracer) options.Option {
+		return func(o options.Options) {
+			sp := opentracing.StartSpan("tarcing name")
+			// injected
+			o.Context = context.WithValue(o.Context,"span-key",sp)
+		}
+	}(trace),
+	// handle span finish
+	options.AppendAfterFunc(func(c context.Context, response *http.Response) context.Context {
+		sp, ok := c.Get("span-key")
+		if ok {
+			// span finish
+	    	sp.Finish()
+		}
+		return c
+	}),
 	)
 
 }
