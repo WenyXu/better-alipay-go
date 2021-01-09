@@ -23,7 +23,7 @@ A better Alipay SDK for Golang. With First-class function, without the tears ðŸ˜
 - [Installation](#installation)
 - [Quick start](#quick-start)
 - [Global Configuration](#global-configuration)
-- [Dynamic Configuration](#installation)
+- [Dynamic Configuration](#dynamic-configuration)
   - [Basic](#basic-usage)
   - [Advanced](#advanced-usage)
 - [Hooks](#hooks)
