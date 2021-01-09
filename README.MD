@@ -3,7 +3,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/WenyXu/better-alipay-go)](https://goreportcard.com/report/github.com/WenyXu/better-alipay-go)
 [![GoDoc](https://pkg.go.dev/badge/github.com/WenyXu/better-alipay-go?status.svg)](https://pkg.go.dev/github.com/WenyXu/better-alipay-go?tab=doc)
 
-A better Alipay SDK for Golang. With First-class function, without the tears 😢
+A better Alipay SDK for Golang. With First-class function, without the tears 😢 [GoDoc](https://pkg.go.dev/github.com/WenyXu/better-alipay-go?tab=doc)
 - Thread safe
 - Hooks friendly
 - Tracing friendly
@@ -140,7 +140,7 @@ func main() {
 
 ```
 
-after the above configuring, options.newOptions will return new Options with your configured
+after above configuring, options.newOptions will return new Options with your configured
 
 ```go
 // options.go 
@@ -161,9 +161,9 @@ func newOptions(opts ...Option) Options {
 
 ## dynamic-configuration
 
-if your application have multi-alipay-app-config, you can configure configuration dynamically
+if your application have multiple configurations, you can configure configuration dynamically
 
-In Request func, it will make a copy Options form your current Options, then modify the Options. generally, It will be thread-safe.
+when you call Request func, it will make a copy form your current Options, then modify the Options. generally, it will be thread-safe.
 
 ### basic-usage 
 
@@ -199,11 +199,11 @@ func main(){
                 Set("buyer_id", "2088802095984694").
                 Set("out_trade_no", "123456786543").
                 Set("total_amount", "88.88")
-	    }),
-	    &resp,
-	    // dynamic configuration
-	    options.AppAuthToken("your-app-auth-token"),
-	    options.AuthToken("your-auth-token"),
+        }),
+        &resp,
+        // dynamic configuration
+        options.AppAuthToken("your-app-auth-token"),
+        options.AuthToken("your-auth-token"),
 	)
 }
 ```
@@ -283,7 +283,7 @@ func main(){
 
 ```
 
-load configuration form database or somewhere,and configure dynamically at per request
+load configuration form database or somewhere, and configure dynamically at per request
 ```go
 package main
 import (
@@ -311,12 +311,12 @@ func main()  {
 	// var resp AlipayTradeCreateResponse
 	resp := make(map[string]interface{})
 	s.Request("alipay.trade.create",m.NewMap(func(param m.M) {
-		param.
-			Set("subject", "网站测试支付").
-			Set("buyer_id", "2088802095984694").
-			Set("out_trade_no", "123456786543").
-			Set("total_amount", "88.88")
-	}),
+              param.
+                  Set("subject", "网站测试支付").
+                  Set("buyer_id", "2088802095984694").
+                  Set("out_trade_no", "123456786543").
+                  Set("total_amount", "88.88")
+	    }),
         &resp,
         // dynamic configuration pre Request func
         MakeAppConfig(config),
@@ -429,12 +429,12 @@ func main() {
 	}(trace),
 	// handle span finish
 	options.AppendAfterFunc(func(c context.Context, response *http.Response) context.Context {
-		sp, ok := c.Get("span-key")
-		if ok {
-			// span finish
-	    	sp.Finish()
-		}
-		return c
+            sp, ok := c.Get("span-key")
+            if ok {
+                // span finish
+                sp.Finish()
+            }
+		    return c
 	    }),
 	)
 
