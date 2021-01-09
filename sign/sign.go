@@ -4,6 +4,9 @@ Copyright 2020 RS4
 @Date: 2021/01/08 17:13
 */
 
+/*
+	Utility for sign the param and validate sign & data
+*/
 package sign
 
 import (

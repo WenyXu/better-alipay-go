@@ -84,19 +84,26 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
 	return
 }
 
+// Options
 func (s service) Options() options.Options {
 	return s.opts
 }
 
-// New return a empty service, with following global config
+// New will return a empty service, using global default configurations
 //
 // you can use:
-// options.SetDefaultTransport(f http.RoundTripper),
-// options.SetDefaultDecFunc(f DecFunc),
-// options.SetDefaultMakeReqFunc(f MakeReqFunc),
-// options.SetDefaultLogger(f logger.Logger),
-// options.SetDefaultLocation(f Option),
-// to modify these global config.
+//
+// options.SetDefaultTransport(f http.RoundTripper)
+//
+// options.SetDefaultDecFunc(f DecFunc)
+//
+// options.SetDefaultMakeReqFunc(f MakeReqFunc)
+//
+// options.SetDefaultLogger(f logger.Logger)
+//
+// options.SetDefaultLocation(f Option)
+//
+// To modify default global configurations.
 //
 // 	opt := Options{
 //		Transport: DefaultTransport,

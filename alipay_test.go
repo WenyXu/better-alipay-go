@@ -43,6 +43,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestService_Request(t *testing.T) {
+
 	resp := make(map[string]interface{})
 	err := s.Request("alipay.trade.create", _map.NewMap(func(m _map.M) {
 		m.

@@ -5,7 +5,7 @@ Copyright 2020 RS4
 */
 
 /*
-	key/cert util
+	Utility for key and cert file
 */
 package cert
 

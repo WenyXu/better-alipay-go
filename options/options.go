@@ -5,7 +5,7 @@ Copyright 2020 RS4
 */
 
 /*
-	setup AppConfig & ClientConfig
+	Module for setup AppConfig, ClientConfig
 */
 package options
 
@@ -39,18 +39,22 @@ func SetDefaultTransport(f http.RoundTripper) {
 	DefaultTransport = f
 }
 
+// SetDefaultMakeReqFunc Set Global Default MakeReqFunc
 func SetDefaultMakeReqFunc(f MakeReqFunc) {
 	DefaultMakeReqFunc = f
 }
 
+// SetDefaultDecFunc Set Global Default DecFunc
 func SetDefaultDecFunc(f DecFunc) {
 	DefaultDecFunc = f
 }
 
+// SetDefaultLocation Set Global Default Location
 func SetDefaultLocation(f Option) {
 	DefaultLocation = f
 }
 
+// SetDefaultLogger Set Global Default Logger
 func SetDefaultLogger(f logger.Logger) {
 	DefaultLogger = f
 }

@@ -5,7 +5,7 @@ Copyright 2020 RS4
 */
 
 /*
-	logger
+	Module for logger
 */
 package logger
 

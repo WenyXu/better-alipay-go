@@ -5,7 +5,7 @@ Copyright 2020 RS4
 */
 
 /*
-	notify util
+	Utility for handle notify request (*http.Request or url.Values)
 */
 package notify
 

@@ -5,7 +5,7 @@ Copyright 2020 RS4
 */
 
 /*
-	The app config
+	Module for configure the sdk configurations
 */
 package config
 
