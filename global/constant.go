@@ -4,6 +4,9 @@ Copyright 2020 RS4
 @Date: 2021/01/07 5:48
 */
 
+/*
+	Global constants
+*/
 package global
 
 const (

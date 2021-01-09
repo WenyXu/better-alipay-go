@@ -5,7 +5,7 @@ Copyright 2020 RS4
 */
 
 /*
- map[string]interface{]
+	Utility for map[string]interface{}
 */
 package m
 
