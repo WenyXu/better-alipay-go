@@ -74,10 +74,10 @@ func main(){
         // options.RootCertBytes()
         // options.RootCertSn()
         options.RootCertPath("./cert_file/alipayRootCert.crt"),
-		// similar to the AppCertPath
-		// also provide:
-		// options.PublicCertBytes()
-		// options.PublicCertSn()
+        // similar to the AppCertPath
+        // also provide:
+        // options.PublicCertBytes()
+        // options.PublicCertSn()
         options.PublicCertPath("./cert_file/alipayCertPublicKey_RSA2.crt"),
         options.Production(false),
         // or global.PKCS1
@@ -103,7 +103,7 @@ func main(){
 
 ## global-configuration
 
-you can use following functions to configure global configuration
+You can use following functions to configure global configuration
 
 ```go
 package main
@@ -140,7 +140,7 @@ func main() {
 
 ```
 
-after above configuring, options.newOptions will return new Options with your configured
+After above configuring, options.newOptions will return new Options with your configured
 
 ```go
 // options.go 
@@ -161,13 +161,13 @@ func newOptions(opts ...Option) Options {
 
 ## dynamic-configuration
 
-if your application have multiple configurations, you can configure configuration dynamically
+If your application have multiple configurations, you can configure configuration dynamically
 
-when you call Request func, it will make a copy form your current Options, then modify the Options. generally, it will be thread-safe.
+When you call Request func, it will make a copy form your current Options, then modify the Options. generally, it will be thread-safe.
 
 ### basic-usage 
 
-configure per request
+Configure per request
 ```go
 package main
 import (
@@ -209,7 +209,7 @@ func main(){
 ```
 
 ### advanced-usage
-configure with func which implement options.Option
+Configure with func which implement options.Option
 ```go
     // implement options.Option
     // type Option func(*Options)
@@ -244,7 +244,7 @@ configure with func which implement options.Option
     
     
 ```
-use a client without default app configuration and configure per request
+Use a client without default app configuration and configure per request
 ```go
 package main
 import (
@@ -283,7 +283,7 @@ func main(){
 
 ```
 
-load configuration form database or somewhere, and configure dynamically at per request
+Load configuration form database or somewhere, and configure dynamically at per request
 ```go
 package main
 import (
@@ -328,7 +328,7 @@ func main()  {
 ## hooks
 In Options, we provide hooks which run before request started, and after received response, so you can do something what you like, it is just similar to web middleware
 
-we provide a sample here, help you create a image
+We provide a sample here, help you create a image
 
 ```go
 // options.go
@@ -392,7 +392,7 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
 ```
 
 ## tracing
-you can inject context, when you call a Request func, and use hook to finish the tracing
+You can inject context, when you call a Request func, and use hook to finish the tracing
 
 ```go
 package main
