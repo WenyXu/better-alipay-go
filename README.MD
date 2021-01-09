@@ -4,11 +4,18 @@
 [![GoDoc](https://pkg.go.dev/badge/github.com/WenyXu/better-alipay-go?status.svg)](https://pkg.go.dev/github.com/WenyXu/better-alipay-go?tab=doc)
 
 A better Alipay SDK for Golang. With First-class function, without the tears 😢
-- Tracing friendly
 - Thread safe
+- Hooks friendly
+- Tracing friendly
 - Dynamic configuration friendly
+- Multiple configuration friendly
 
 一个更好的支付宝（Alipay）SDK。函数优先，没有眼泪😢
+- 多线程安全
+- Hooks
+- 链路跟踪
+- 动态配置
+- 多个配置
 
 ## Contents
 
@@ -157,8 +164,10 @@ func newOptions(opts ...Option) Options {
 if your application have multi-alipay-app-config, you can configure configuration dynamically
 
 In Request func, it will make a copy Options form your current Options, then modify the Options. generally, It will be thread-safe.
+
 ### basic-usage 
 
+configure per request
 ```go
 package main
 import (
@@ -200,6 +209,7 @@ func main(){
 ```
 
 ### advanced-usage
+configure with func which implement options.Option
 ```go
     // implement options.Option
     // type Option func(*Options)
@@ -234,9 +244,7 @@ func main(){
     
     
 ```
-
-load configuration form database or somewhere,and configure dynamically at per request
-
+use a client without default app configuration and configure per request
 ```go
 package main
 import (
@@ -275,6 +283,7 @@ func main(){
 
 ```
 
+load configuration form database or somewhere,and configure dynamically at per request
 ```go
 package main
 import (
@@ -283,7 +292,7 @@ import (
 	"github.com/WenyXu/better-alipay-go/m"
 )
 
-func MakeAppConfig(yourConfig ConfigEntity ) options.Option {
+func MakeAppConfig(yourConfig ConfigEntity) options.Option {
 	return func(o *options.Options) {
 		// modify your app config 
 		// using 
@@ -308,9 +317,9 @@ func main()  {
 			Set("out_trade_no", "123456786543").
 			Set("total_amount", "88.88")
 	}),
-		&resp,
-		// dynamic configuration pre Request func
-		MakeAppConfig(config),
+        &resp,
+        // dynamic configuration pre Request func
+        MakeAppConfig(config),
 	)
     
 }
@@ -426,7 +435,7 @@ func main() {
 	    	sp.Finish()
 		}
 		return c
-	}),
+	    }),
 	)
 
 }
