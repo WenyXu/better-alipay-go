@@ -30,7 +30,7 @@ A better Alipay SDK for Golang. With First-class function, without the tears ðŸ˜
 - [Tracing](#tracing)
 - [Inspirited](#inspirited)
 
-## installation
+## Installation
 To install Better-Alipay-Go package, you need to install Go and set your Go workspace first.
 
 1. The first need [Go](https://golang.org/) installed, then you can use the below Go command to install Gin.
@@ -45,7 +45,7 @@ $ go get -u github.com/WenyXu/better-alipay-go
 import "github.com/WenyXu/better-alipay-go"
 ```
 
-## quick-start
+## Quick Start
 
 ```go
 package main
@@ -101,7 +101,7 @@ func main(){
     
 ```
 
-## global-configuration
+## Global Configuration
 
 You can use following functions to configure global configuration
 
@@ -159,13 +159,13 @@ func newOptions(opts ...Option) Options {
 }
 ```
 
-## dynamic-configuration
+## Dynamic Configuration
 
 If your application have multiple configurations, you can configure configuration dynamically
 
 When you call Request func, it will make a copy form your current Options, then modify the Options. generally, it will be thread-safe.
 
-### basic-usage 
+### Basic Usage 
 
 Configure per request
 ```go
@@ -208,7 +208,7 @@ func main(){
 }
 ```
 
-### advanced-usage
+### Advanced Usage
 Configure with func which implement options.Option
 ```go
     // implement options.Option
@@ -325,7 +325,7 @@ func main()  {
 }
 ```
 
-## hooks
+## Hooks
 In Options, we provide hooks which run before request started, and after received response, so you can do something what you like, it is just similar to web middleware
 
 We provide a sample here, help you create a image
@@ -391,7 +391,7 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
 
 ```
 
-## tracing
+## Tracing
 You can inject context, when you call a Request func, and use hook to finish the tracing
 
 ```go
@@ -441,6 +441,6 @@ func main() {
 }
 ```
 
-## inspirited
+## Inspirited
 - [iGoogle-ink/gopay](https://github.com/iGoogle-ink/gopay)
 - [smartwalle/alipay](https://github.com/smartwalle/alipay)
