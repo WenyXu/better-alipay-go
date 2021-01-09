@@ -4,15 +4,21 @@ Copyright 2020 RS4
 @Date: 2021/01/09 0:17
 */
 
-package alipay
+/*
+	notify util
+*/
+package notify
 
 import (
 	"encoding/json"
 	"errors"
 	"net/http"
 	"net/url"
+
+	_map "github.com/WenyXu/better-alipay-go/m"
 )
 
+// ParseNotifyToStruct parse notify form into struct, reqOrValues accept a *http.Request or url.Values value
 func ParseNotifyToStruct(reqOrValues interface{}, result interface{}) (err error) {
 	m, err := ParseNotifyToMap(reqOrValues)
 	if err != nil {
@@ -25,7 +31,8 @@ func ParseNotifyToStruct(reqOrValues interface{}, result interface{}) (err error
 	return json.Unmarshal(b, result)
 }
 
-func ParseNotifyToMap(reqOrValues interface{}) (m M, err error) {
+// ParseNotifyToMap parse notify form into map, reqOrValues accept a *http.Request or url.Values value
+func ParseNotifyToMap(reqOrValues interface{}) (m _map.M, err error) {
 	switch reqOrValues.(type) {
 	case *http.Request:
 		if err = reqOrValues.(*http.Request).ParseForm(); err != nil {
@@ -39,8 +46,9 @@ func ParseNotifyToMap(reqOrValues interface{}) (m M, err error) {
 	}
 }
 
-func ParseNotifyByURLValues(value url.Values) (m M, err error) {
-	m = make(M, len(value)+1)
+// ParseNotifyToMap parse notify form into map, pass into url.Values
+func ParseNotifyByURLValues(value url.Values) (m _map.M, err error) {
+	m = make(_map.M, len(value)+1)
 	for k, v := range value {
 		if len(v) == 1 {
 			m.Set(k, v[0])

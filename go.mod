@@ -1,4 +1,4 @@
-module better-alipay-sdk-go
+module github.com/WenyXu/better-alipay-go
 
 go 1.15
 

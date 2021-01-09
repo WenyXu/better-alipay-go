@@ -8,38 +8,42 @@ package alipay
 
 import (
 	"context"
+
+	"github.com/WenyXu/better-alipay-go/config"
+	m "github.com/WenyXu/better-alipay-go/m"
+	"github.com/WenyXu/better-alipay-go/options"
 )
 
 type Service interface {
-	Options() Options
-	Request(method string, m M, response interface{}, opts ...Option) (err error)
-	MakeParam(method string, m M, opts ...Option) (data M, err error)
+	Options() options.Options
+	Request(method string, param m.M, response interface{}, opts ...options.Option) (err error)
+	MakeParam(method string, param m.M, opts ...options.Option) (data m.M, err error)
 }
-
-type Option func(*Options)
 
 type service struct {
-	opts Options
+	opts options.Options
 }
 
-func (s service) MakeParam(method string, m M, opts ...Option) (data M, err error) {
+// MakeParam
+func (s service) MakeParam(method string, param m.M, opts ...options.Option) (data m.M, err error) {
 	copyOpts := s.opts.Copy()
 	// setup options
 	for _, o := range opts {
 		o(&copyOpts)
 	}
-	return CombineMakeMapEndpointFunc(
-		SetMethod(method),
-		SetPublicParam(copyOpts.config),
-		SetOptionsParam(copyOpts.config),
-		SetBizContent(m),
-		SignParam(copyOpts.config),
+	return m.CombineMakeMapEndpointFunc(
+		config.SetMethod(method),
+		config.SetPublicParam(copyOpts.Config),
+		config.SetOptionalParam(copyOpts.Config),
+		config.SetBizContent(param),
+		config.SignParam(copyOpts.Config),
 	)
 }
 
-func (s service) Request(method string, m M, response interface{}, opts ...Option) (err error) {
+// Do Request
+func (s service) Request(method string, param m.M, response interface{}, opts ...options.Option) (err error) {
 	copyOpts := s.opts.Copy()
-	ctx, cancel := context.WithCancel(copyOpts.context)
+	ctx, cancel := context.WithCancel(copyOpts.Context)
 	defer cancel()
 	// setup options
 	for _, o := range opts {
@@ -47,19 +51,19 @@ func (s service) Request(method string, m M, response interface{}, opts ...Optio
 	}
 
 	// make request
-	req, err := copyOpts.makeReq(ctx, method, m, copyOpts.config)
+	req, err := copyOpts.MakeReq(ctx, method, param, copyOpts.Config)
 	if err != nil {
 		cancel()
 		return err
 	}
 
 	// before hooks
-	for _, f := range copyOpts.before {
+	for _, f := range copyOpts.Before {
 		ctx = f(ctx, req)
 	}
 
 	// do request
-	resp, err := copyOpts.transport.RoundTrip(req)
+	resp, err := copyOpts.Transport.RoundTrip(req)
 	if err != nil {
 		cancel()
 		return err
@@ -67,12 +71,12 @@ func (s service) Request(method string, m M, response interface{}, opts ...Optio
 	defer resp.Body.Close()
 
 	// after hooks
-	for _, f := range copyOpts.after {
+	for _, f := range copyOpts.After {
 		ctx = f(ctx, resp)
 	}
 
 	// dec response
-	err = copyOpts.dec(ctx, resp, response)
+	err = copyOpts.Dec(ctx, resp, response)
 	if err != nil {
 		cancel()
 		return err
@@ -80,26 +84,61 @@ func (s service) Request(method string, m M, response interface{}, opts ...Optio
 	return
 }
 
-func (s service) Options() Options {
+func (s service) Options() options.Options {
 	return s.opts
 }
 
-func NewService(opts ...Option) Service {
-	return newService(opts...)
+// New return a empty service, with following global config
+//
+// you can use:
+// options.SetDefaultTransport(f http.RoundTripper),
+// options.SetDefaultDecFunc(f DecFunc),
+// options.SetDefaultMakeReqFunc(f MakeReqFunc),
+// options.SetDefaultLogger(f logger.Logger),
+// options.SetDefaultLocation(f Option),
+// to modify these global config.
+//
+// 	opt := Options{
+//		Transport: DefaultTransport,
+//		Context:   context.Background(),
+//		MakeReq:   DefaultMakeReqFunc,
+//		Dec:       DefaultDecFunc,
+//		Logger:    DefaultLogger,
+//	}
+func New(opts ...options.Option) Service {
+	return newService(func(s *service) {
+		s.opts = options.NewOptions(opts...)
+	})
 }
 
-func DefaultClient(opts ...Option) Service {
-	var newOpts []Option
-	newOpts = append(newOpts, DefaultLocation(), DefaultCharset(), DefaultFormat(), DefaultVersion())
-	if opts != nil {
-		newOpts = append(newOpts, opts...)
-	}
-	return newService(newOpts...)
+// Default return a default service
+//
+//				s := Default()
+// 				// same as
+// 				s := New(
+//					options.DefaultLocation,
+//					options.DefaultCharset(),
+//					options.DefaultFormat(),
+//					options.DefaultVersion(),
+//				)
+func Default(opts ...options.Option) Service {
+	return newService(func(s *service) {
+		s.opts = options.DefaultOptions(
+			append(
+				append(
+					[]options.Option{},
+					options.DefaultLocation,
+					options.DefaultCharset(),
+					options.DefaultFormat(),
+					options.DefaultVersion(),
+				), opts...,
+			)...,
+		)
+	})
 }
 
-func newService(opts ...Option) Service {
+func newService(setup func(s *service)) Service {
 	service := service{}
-	options := newOptions(opts...)
-	service.opts = options
+	setup(&service)
 	return service
 }

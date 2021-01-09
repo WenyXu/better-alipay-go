@@ -4,14 +4,19 @@ Copyright 2020 RS4
 @Date: 2021/01/08 17:30
 */
 
-package alipay
+/*
+ map[string]interface{]
+*/
+package m
 
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"sort"
 	"strings"
-	"time"
+
+	"github.com/WenyXu/better-alipay-go/errors"
 )
 
 type M map[string]interface{}
@@ -20,15 +25,18 @@ type MapOptions struct {
 	IgnoreEmptyString *bool
 }
 
+// NewMap return a new map, pass into a higher order func to setup map
 func NewMap(f func(m M)) M {
 	m := make(M)
 	f(m)
 	return m
 }
+
 func (o *MapOptions) SetIgnoreEmptyString(input bool) {
 	o.IgnoreEmptyString = &input
 }
 
+// mergeOptions merge Options
 func mergeOptions(opts ...MapOptions) MapOptions {
 	merged := MapOptions{}
 	for _, o := range opts {
@@ -39,6 +47,9 @@ func mergeOptions(opts ...MapOptions) MapOptions {
 	return merged
 }
 
+// Set set map value by key
+//
+// if opts(MapOptions) SetIgnoreEmptyString(true),will ignore empty string("")
 func (m M) Set(key string, value interface{}, opts ...MapOptions) M {
 	mergedOption := mergeOptions(opts...)
 	switch value.(type) {
@@ -61,6 +72,7 @@ func (m M) Set(key string, value interface{}, opts ...MapOptions) M {
 	return m
 }
 
+// GetMapValueByKey get map value by key, marshal non-string type into string
 func GetMapValueByKey(m map[string]interface{}, key string) (string, error) {
 	if m != nil {
 		if value, ok := m[key]; ok {
@@ -79,6 +91,7 @@ func GetMapValueByKey(m map[string]interface{}, key string) (string, error) {
 	return "", fmt.Errorf("input map is nil")
 }
 
+// EncodeMapParams sort keys by asc, encode into url string
 func EncodeMapParams(m map[string]interface{}) string {
 	var (
 		buf  strings.Builder
@@ -104,6 +117,7 @@ func EncodeMapParams(m map[string]interface{}) string {
 
 type MakeMapEndpoint func(M) (M, error)
 
+// CombineMakeMapEndpointFunc combine MakeMapEndpoint func
 func CombineMakeMapEndpointFunc(endpoint ...MakeMapEndpoint) (map[string]interface{}, error) {
 	//var values = url.Values{}
 	//values.Add("method", method)
@@ -116,64 +130,16 @@ func CombineMakeMapEndpointFunc(endpoint ...MakeMapEndpoint) (map[string]interfa
 		}
 	}
 	if len(errs) != 0 {
-		return target, FormatErrors(errs...)
+		return target, errors.FormatErrors(errs...)
 	}
 	return target, nil
 }
 
-func SetPublicParam(c Config) MakeMapEndpoint {
-	return func(target M) (M, error) {
-		target.
-			Set("app_id", c.appId).
-			Set("format", c.format).
-			Set("charset", c.charset).
-			Set("sign_type", c.signType).
-			Set("timestamp", time.Now().In(c.loc).Format(TimeLayout))
-		return target, nil
+// FormatURLParam convert map into a url.Values
+func FormatURLParam(m map[string]interface{}) (urlParam string) {
+	v := url.Values{}
+	for key, value := range m {
+		v.Add(key, value.(string))
 	}
-}
-
-func SetOptionsParam(c Config) MakeMapEndpoint {
-	return func(target M) (M, error) {
-		opt := MapOptions{}
-		opt.SetIgnoreEmptyString(true)
-		// add public params
-		target.
-			Set("app_cert_sn", c.appCertSN, opt).
-			Set("alipay_root_cert_sn", c.aliPayRootCertSN, opt).
-			Set("return_url", c.returnUrl, opt).
-			Set("notify_url", c.notifyUrl, opt).
-			Set("app_auth_token", c.appAuthToken, opt).
-			Set("auth_token", c.authToken, opt)
-		return target, nil
-	}
-}
-
-func SetMethod(method string) MakeMapEndpoint {
-	return func(target M) (M, error) {
-		target.Set("method", method)
-		return target, nil
-	}
-}
-
-func SetBizContent(source M) MakeMapEndpoint {
-	return func(target M) (M, error) {
-		bytes, err := json.Marshal(source)
-		if err != nil {
-			return target, fmt.Errorf("json.Marshal：%w", err)
-		}
-		target["biz_content"] = string(bytes)
-		return target, nil
-	}
-}
-
-func SignParam(c Config) MakeMapEndpoint {
-	return func(target M) (M, error) {
-		sign, err := DoRsaSign(target, c.signType, c.privateKeyType, c.privateKey)
-		if err != nil {
-			return target, err
-		}
-		target.Set("sign", sign)
-		return target, nil
-	}
+	return v.Encode()
 }
