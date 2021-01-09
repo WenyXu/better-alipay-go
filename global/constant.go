@@ -4,9 +4,9 @@ Copyright 2020 RS4
 @Date: 2021/01/07 5:48
 */
 
-package alipay
+package global
 
-var (
+const (
 	RSA2        = "RSA2"
 	RSA         = "RSA"
 	PKCS1       = "PKCS1"

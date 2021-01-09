@@ -11,6 +11,10 @@ import (
 	"os"
 	"testing"
 
+	"github.com/WenyXu/better-alipay-go/global"
+	_map "github.com/WenyXu/better-alipay-go/m"
+	"github.com/WenyXu/better-alipay-go/options"
+
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
@@ -24,30 +28,31 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	s = DefaultClient(
-		AppId(os.Getenv("APP_ID")),
-		PrivateKey(os.Getenv("PrivateKey")),
-		AppCertSnPath("./cert/appCertPublicKey.crt"),
-		RootCertSnPath("./cert/alipayRootCert.crt"),
-		PublicCertSnPath("./cert/alipayCertPublicKey_RSA2.crt"),
-		Production(false),
-		PrivateKeyType(PKCS8),
-		SignType(RSA2),
+	s = Default(
+		options.AppId(os.Getenv("APP_ID")),
+		options.PrivateKey(os.Getenv("PrivateKey")),
+		options.AppCertPath("./cert_file/appCertPublicKey.crt"),
+		options.RootCertPath("./cert_file/alipayRootCert.crt"),
+		options.PublicCertPath("./cert_file/alipayCertPublicKey_RSA2.crt"),
+		options.Production(false),
+		options.PrivateKeyType(global.PKCS8),
+		options.SignType(global.RSA2),
 	)
-	fmt.Printf("%p\n", s.Options().logger)
+	fmt.Printf("%p\n", s.Options().Logger)
 	os.Exit(m.Run())
 }
+
 func TestService_Request(t *testing.T) {
 	resp := make(map[string]interface{})
-	err := s.Request("alipay.trade.create", NewMap(func(m M) {
+	err := s.Request("alipay.trade.create", _map.NewMap(func(m _map.M) {
 		m.
 			Set("subject", "网站测试支付").
 			Set("buyer_id", "2088802095984694").
 			Set("out_trade_no", "123456786543").
 			Set("total_amount", "88.88")
-	}), &resp, SetAfterFunc(EmptyAfterFunc))
+	}), &resp, options.SetAfterFunc(options.EmptyAfterFunc))
 
-	_ = s.Request("alipay.trade.create", NewMap(func(m M) {
+	_ = s.Request("alipay.trade.create", _map.NewMap(func(m _map.M) {
 		m.
 			Set("subject", "网站测试支付").
 			Set("buyer_id", "2088802095984694").

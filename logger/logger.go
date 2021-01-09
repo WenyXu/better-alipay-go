@@ -4,7 +4,10 @@ Copyright 2020 RS4
 @Date: 2021/01/07 5:33
 */
 
-package alipay
+/*
+	logger
+*/
+package logger
 
 import (
 	"log"
@@ -23,23 +26,41 @@ type Logger interface {
 }
 
 // StdLogger is implementation of the Logger interface that delegates to default `log` package
-var StdLogger = &stdLogger{}
+var StdLogger = &logger{
+	errorFunc: ErrorFunc,
+	infofFunc: InfofFunc,
+}
 
-type stdLogger struct{}
+type logger struct {
+	errorFunc func(msg string)
+	infofFunc func(msg string, args ...interface{})
+}
 
-func (l *stdLogger) Error(msg string) {
-	log.Printf("ERROR: %s", msg)
+func (l logger) Error(msg string) {
+	l.errorFunc(msg)
 }
 
 // Infof logs a message at info priority
-func (l *stdLogger) Infof(msg string, args ...interface{}) {
-	log.Printf(msg, args...)
+func (l logger) Infof(msg string, args ...interface{}) {
+	l.infofFunc(msg, args...)
 }
 
 // NullLogger is implementation of the Logger interface that delegates to default `log` package
-var NullLogger = &nullLogger{}
+var NullLogger = &logger{
+	errorFunc: EmptyErrorFunc,
+	infofFunc: EmptyInfofFunc,
+}
 
-type nullLogger struct{}
+func EmptyErrorFunc(msg string) {
 
-func (l *nullLogger) Error(msg string)                      {}
-func (l *nullLogger) Infof(msg string, args ...interface{}) {}
+}
+func EmptyInfofFunc(msg string, args ...interface{}) {
+
+}
+
+func ErrorFunc(msg string) {
+	log.Printf("ERROR: %s", msg)
+}
+func InfofFunc(msg string, args ...interface{}) {
+	log.Printf(msg, args...)
+}
