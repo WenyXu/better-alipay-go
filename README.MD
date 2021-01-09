@@ -420,7 +420,7 @@ func main() {
 	&resp,
 	// inject you tracing context
 	func(trace opentracing.Tracer) options.Option {
-		return func(o options.Options) {
+		return func(o *options.Options) {
 			sp := opentracing.StartSpan("tarcing name")
 			// injected
 			o.Context = context.WithValue(o.Context,"span-key",sp)
