@@ -23,14 +23,14 @@ A better Alipay SDK for Golang. With First-class function, without the tears ðŸ˜
 - [Installation](#installation)
 - [Quick start](#quick-start)
 - [Global Configuration](#global-configuration)
-- [Dynamic Configuration](#installation)
+- [Dynamic Configuration](#dynamic-configuration)
   - [Basic](#basic-usage)
   - [Advanced](#advanced-usage)
 - [Hooks](#hooks)
 - [Tracing](#tracing)
 - [Inspirited](#inspirited)
 
-## installation
+## Installation
 To install Better-Alipay-Go package, you need to install Go and set your Go workspace first.
 
 1. The first need [Go](https://golang.org/) installed, then you can use the below Go command to install Gin.
@@ -45,7 +45,7 @@ $ go get -u github.com/WenyXu/better-alipay-go
 import "github.com/WenyXu/better-alipay-go"
 ```
 
-## quick-start
+## Quick Start
 
 ```go
 package main
@@ -74,10 +74,10 @@ func main(){
         // options.RootCertBytes()
         // options.RootCertSn()
         options.RootCertPath("./cert_file/alipayRootCert.crt"),
-		// similar to the AppCertPath
-		// also provide:
-		// options.PublicCertBytes()
-		// options.PublicCertSn()
+        // similar to the AppCertPath
+        // also provide:
+        // options.PublicCertBytes()
+        // options.PublicCertSn()
         options.PublicCertPath("./cert_file/alipayCertPublicKey_RSA2.crt"),
         options.Production(false),
         // or global.PKCS1
@@ -101,9 +101,9 @@ func main(){
     
 ```
 
-## global-configuration
+## Global Configuration
 
-you can use following functions to configure global configuration
+You can use following functions to configure global configuration.
 
 ```go
 package main
@@ -140,7 +140,7 @@ func main() {
 
 ```
 
-after above configuring, options.newOptions will return new Options with your configured
+After above configuring, options.newOptions will return new Options with your configured.
 
 ```go
 // options.go 
@@ -159,15 +159,15 @@ func newOptions(opts ...Option) Options {
 }
 ```
 
-## dynamic-configuration
+## Dynamic Configuration
 
-if your application have multiple configurations, you can configure configuration dynamically
+If your application have multiple configurations, you can configure configuration dynamically.
 
-when you call Request func, it will make a copy form your current Options, then modify the Options. generally, it will be thread-safe.
+When you call Request func, it will make a copy form your current Options, then modify the Options. generally, it will be thread-safe.
 
-### basic-usage 
+### Basic Usage 
 
-configure per request
+Configure per request
 ```go
 package main
 import (
@@ -208,8 +208,8 @@ func main(){
 }
 ```
 
-### advanced-usage
-configure with func which implement options.Option
+### Advanced Usage
+Configure with func which implement options.Option.
 ```go
     // implement options.Option
     // type Option func(*Options)
@@ -244,7 +244,7 @@ configure with func which implement options.Option
     
     
 ```
-use a client without default app configuration and configure per request
+Use a client without default app configuration and configure per request.
 ```go
 package main
 import (
@@ -283,7 +283,7 @@ func main(){
 
 ```
 
-load configuration form database or somewhere, and configure dynamically at per request
+Load configuration form database or somewhere, and configure dynamically at per request.
 ```go
 package main
 import (
@@ -325,10 +325,9 @@ func main()  {
 }
 ```
 
-## hooks
-In Options, we provide hooks which run before request started, and after received response, so you can do something what you like, it is just similar to web middleware
-
-we provide a sample here, help you create a image
+## Hooks
+In Options, we provide hooks which run before request started, and after response received, so you can do something like inject context, tracing's span etc. it is just similar to web middleware.
+We provide a sample here, help you have a concept.
 
 ```go
 // options.go
@@ -358,7 +357,7 @@ func DefaultAfterFunc(ctx context.Context, resp *http.Response) context.Context 
 
 ```
 
-The Request fun will run before-hooks before the request started, and run after-hook when received response
+The Request fun will run before-hooks before the request started, and run after-hook after response received.
 
 ```go
 //alipay.go
@@ -368,7 +367,7 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
     
     ...
     
-    // run before hooks before start request
+    // run before hooks before request started
     for _, f := range copyOpts.Before {
         ctx = f(ctx, req)
     }
@@ -381,7 +380,7 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
     
     ...
     
-    // run after hooks after received response
+    // run after hooks after response received
     for _, f := range copyOpts.After {
         ctx = f(ctx, resp)
     }
@@ -391,8 +390,8 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
 
 ```
 
-## tracing
-you can inject context, when you call a Request func, and use hook to finish the tracing
+## Tracing
+You can inject context, when you call a Request func, and use hook to finish the tracing.
 
 ```go
 package main
@@ -441,6 +440,6 @@ func main() {
 }
 ```
 
-## inspirited
+## Inspirited
 - [iGoogle-ink/gopay](https://github.com/iGoogle-ink/gopay)
 - [smartwalle/alipay](https://github.com/smartwalle/alipay)
