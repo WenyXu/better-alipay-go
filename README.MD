@@ -4,11 +4,18 @@
 [![GoDoc](https://pkg.go.dev/badge/github.com/WenyXu/better-alipay-go?status.svg)](https://pkg.go.dev/github.com/WenyXu/better-alipay-go?tab=doc)
 
 A better Alipay SDK for Golang. With First-class function, without the tears 😢
-- Tracing friendly
 - Thread safe
+- Hooks friendly
+- Tracing friendly
 - Dynamic configuration friendly
+- Multiple configuration friendly
 
 一个更好的支付宝（Alipay）SDK。函数优先，没有眼泪😢
+- 多线程安全
+- Hooks
+- 链路跟踪
+- 动态配置
+- 多配置
 
 ## Contents
 
