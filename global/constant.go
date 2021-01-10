@@ -82,4 +82,55 @@ const (
 
 	// https://opendocs.alipay.com/apis/api_2/alipay.user.certify.open.certify
 	AlipayUserCertifyOpenCertify = "alipay.user.certify.open.certify"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.fastpay.refund.query
+	AlipayTradeFastpayRefundQuery = "alipay.trade.fastpay.refund.query"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.order.settle
+	AlipayTradeOrderSettle = "alipay.trade.order.settle"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.create
+	AlipayTradeCreate = "alipay.trade.create"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.close
+	AlipayTradeClose = "alipay.trade.close"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.cancel
+	AlipayTradeCancel = "alipay.trade.cancel"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.refund
+	AlipayTradeRefund = "alipay.trade.refund"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.page.trade.refund
+	AlipayTradePageRefund = "alipay.trade.page.refund"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.precreate
+	AlipayTradePrecreate = "alipay.trade.precreate"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.query
+	AlipayTradeQuery = "alipay.trade.query"
+
+	// https://opendocs.alipay.com/apis/api_28/alipay.fund.trans.toaccount.transfer
+	AlipayFundTransToAccountTransfer = "alipay.fund.trans.toaccount.transfer"
+
+	// https://opendocs.alipay.com/apis/api_28/alipay.fund.trans.uni.transfer
+	AlipayFundTransUniTransfer = "alipay.fund.trans.uni.transfer"
+
+	// https://opendocs.alipay.com/apis/api_28/alipay.fund.trans.common.query
+	AlipayFundTransCommonQuery = "alipay.fund.trans.common.query"
+
+	// https://opendocs.alipay.com/apis/api_28/alipay.fund.account.query
+	AlipayFundAccountQuery = "alipay.fund.account.query"
+
+	// https://opendocs.alipay.com/apis/api_2/alipay.user.info.share
+	AlipayUserInfoShare = "alipay.user.info.share"
+
+	// https://opendocs.alipay.com/apis/api_8/zhima.credit.score.get
+	ZhimaCreditScoreGet = "zhima.credit.score.get"
+
+	// https://opendocs.alipay.com/apis/api_2/alipay.user.certify.open.initialize
+	AlipayUserCertifyOpenInitialize = "alipay.user.certify.open.initialize"
+
+	// https://opendocs.alipay.com/apis/api_2/alipay.user.certify.open.query
+	AlipayUserCertifyOpenQuery = "alipay.user.certify.open.query"
 )

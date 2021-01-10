@@ -11,7 +11,6 @@ package m
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/url"
 	"sort"
@@ -148,7 +147,8 @@ func FormatURLParam(m map[string]interface{}) (urlParam string) {
 func MergeMap(source map[string]interface{}) MakeMapEndpoint {
 	return func(target M) error {
 		if source == nil {
-			return errors.New("source is nil")
+			// allow nil input
+			return nil
 		}
 		for k, v := range source {
 			target[k] = v

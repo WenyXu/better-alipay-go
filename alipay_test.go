@@ -118,4 +118,5 @@ func TestService_Request_AlipaySystemOauthToken(t *testing.T) {
 	}), &r2)
 	assert.Equal(t, nil, err)
 	fmt.Println(r2)
+
 }

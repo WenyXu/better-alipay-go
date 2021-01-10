@@ -8,6 +8,17 @@ package entity
 
 import "github.com/pkg/errors"
 
+type ErrorResponse struct {
+	Code    string `json:"code"`
+	Msg     string `json:"msg"`
+	SubCode string `json:"sub_code"`
+	SubMsg  string `json:"sub_msg"`
+}
+
+func (c ErrorResponse) Failed() bool {
+	return c.Code != ""
+}
+
 type Common struct {
 	Code    string `json:"code"`
 	Msg     string `json:"msg"`

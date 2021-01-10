@@ -6,13 +6,9 @@ Copyright 2020 RS4
 
 package entity
 
-type ErrorResponse struct {
-	Common `json:",inline"`
-}
-
 type AlipaySystemOauthTokenResponse struct {
 	AlipaySystemOauthToken `json:"alipay_system_oauth_token_response"`
-	ErrorResponse          `json:"error_response,omitempty"`
+	ErrorResponse          `json:"error_response"`
 	AlipayCertSn           string `json:"alipay_cert_sn"`
 	Sign                   string `json:"sign"`
 }
