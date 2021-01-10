@@ -57,14 +57,14 @@ func (c Config) Url() string {
 	Set("timestamp", time.Now().In(c.Loc).Format(global.TimeLayout))
 */
 func SetPublicParam(c Config) m.MakeMapEndpoint {
-	return func(target m.M) (m.M, error) {
+	return func(target m.M) error {
 		target.
 			Set("app_id", c.AppId).
 			Set("format", c.Format).
 			Set("charset", c.Charset).
 			Set("sign_type", c.SignType).
 			Set("timestamp", time.Now().In(c.Loc).Format(global.TimeLayout))
-		return target, nil
+		return nil
 	}
 }
 
@@ -79,7 +79,7 @@ func SetPublicParam(c Config) m.MakeMapEndpoint {
 	Set("auth_token", c.AuthToken, opt)
 */
 func SetOptionalParam(c Config) m.MakeMapEndpoint {
-	return func(target m.M) (m.M, error) {
+	return func(target m.M) error {
 		opt := m.MapOptions{}
 		opt.SetIgnoreEmptyString(true)
 		// add public params
@@ -90,38 +90,38 @@ func SetOptionalParam(c Config) m.MakeMapEndpoint {
 			Set("notify_url", c.NotifyUrl, opt).
 			Set("app_auth_token", c.AppAuthToken, opt).
 			Set("auth_token", c.AuthToken, opt)
-		return target, nil
+		return nil
 	}
 }
 
 // SetMethod set method
 func SetMethod(method string) m.MakeMapEndpoint {
-	return func(target m.M) (m.M, error) {
+	return func(target m.M) error {
 		target.Set("method", method)
-		return target, nil
+		return nil
 	}
 }
 
 // SetBizContent set bizContent
 func SetBizContent(source m.M) m.MakeMapEndpoint {
-	return func(target m.M) (m.M, error) {
+	return func(target m.M) error {
 		bytes, err := json.Marshal(source)
 		if err != nil {
-			return target, fmt.Errorf("json.Marshal：%w", err)
+			return fmt.Errorf("json.Marshal：%w", err)
 		}
 		target["biz_content"] = string(bytes)
-		return target, nil
+		return nil
 	}
 }
 
 // SignParam sign current params, also set the sign result into map[string]interface{}
 func SignParam(c Config) m.MakeMapEndpoint {
-	return func(target m.M) (m.M, error) {
+	return func(target m.M) error {
 		s, err := sign.Sign(target, c.SignType, cert.LoadPrivateKeyFormString(c.PrivateKeyType, c.PrivateKey))
 		if err != nil {
-			return target, err
+			return err
 		}
 		target.Set("sign", s)
-		return target, nil
+		return nil
 	}
 }

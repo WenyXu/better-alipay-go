@@ -145,7 +145,7 @@ func Default(opts ...options.Option) Service {
 }
 
 func newService(setup func(s *service)) Service {
-	service := service{}
-	setup(&service)
-	return service
+	s := &service{}
+	setup(s)
+	return s
 }

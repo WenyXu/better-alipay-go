@@ -4,7 +4,7 @@ Copyright 2020 RS4
 @Date: 2021/01/07 4:40
 */
 
-package request
+package entity
 
 func DefaultOptions()  {
 	
