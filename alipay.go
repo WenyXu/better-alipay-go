@@ -31,13 +31,18 @@ func (s service) MakeParam(method string, param m.M, opts ...options.Option) (da
 	for _, o := range opts {
 		o(&copyOpts)
 	}
-	return m.CombineMakeMapEndpointFunc(
+	result := make(m.M)
+	err = m.CombineMakeMapEndpointFunc(
 		config.SetMethod(method),
 		config.SetPublicParam(copyOpts.Config),
 		config.SetOptionalParam(copyOpts.Config),
 		config.SetBizContent(param),
 		config.SignParam(copyOpts.Config),
-	)
+	)(result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 // Do Request

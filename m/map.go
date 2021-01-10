@@ -118,21 +118,21 @@ func EncodeMapParams(m map[string]interface{}) string {
 type MakeMapEndpoint func(M) error
 
 // CombineMakeMapEndpointFunc combine MakeMapEndpoint func
-func CombineMakeMapEndpointFunc(endpoint ...MakeMapEndpoint) (map[string]interface{}, error) {
-	//var values = url.Values{}
-	//values.Add("method", method)
-	target := make(map[string]interface{})
-	var errs []error
-	for _, e := range endpoint {
-		err := e(target)
-		if err != nil {
-			errs = append(errs, err)
+func CombineMakeMapEndpointFunc(endpoint ...MakeMapEndpoint) MakeMapEndpoint {
+	return func(target M) error {
+		var errs []error
+		for _, e := range endpoint {
+			err := e(target)
+			if err != nil {
+				errs = append(errs, err)
+			}
 		}
+		if len(errs) != 0 {
+			return errorsMsg.FormatErrors(errs...)
+		}
+		return nil
 	}
-	if len(errs) != 0 {
-		return target, errorsMsg.FormatErrors(errs...)
-	}
-	return target, nil
+
 }
 
 // FormatURLParam convert map into a url.Values

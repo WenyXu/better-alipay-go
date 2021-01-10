@@ -115,18 +115,19 @@ func (o Options) Copy() Options {
 }
 
 func WithoutBizContentMakeReqFunc(ctx context.Context, method string, param m.M, c config.Config) (*http.Request, error) {
-	body, err := m.CombineMakeMapEndpointFunc(
+	body := make(m.M)
+	err := m.CombineMakeMapEndpointFunc(
 		config.SetMethod(method),
 		config.SetPublicParam(c),
 		config.SetOptionalParam(c),
 		m.MergeMap(param),
 		config.SignParam(c),
-	)
-
-	reader := strings.NewReader(m.FormatURLParam(body))
+	)(body)
 	if err != nil {
 		return nil, err
 	}
+
+	reader := strings.NewReader(m.FormatURLParam(body))
 
 	req, err := http.NewRequest(http.MethodPost, c.Url(), reader)
 	if err != nil {
@@ -138,19 +139,19 @@ func WithoutBizContentMakeReqFunc(ctx context.Context, method string, param m.M,
 
 // NewDefaultMakeReqFunc default make request func
 func NewDefaultMakeReqFunc(ctx context.Context, method string, param m.M, c config.Config) (*http.Request, error) {
-
-	body, err := m.CombineMakeMapEndpointFunc(
+	body := make(m.M)
+	err := m.CombineMakeMapEndpointFunc(
 		config.SetMethod(method),
 		config.SetPublicParam(c),
 		config.SetOptionalParam(c),
 		config.SetBizContent(param),
 		config.SignParam(c),
-	)
-
-	reader := strings.NewReader(m.FormatURLParam(body))
+	)(body)
 	if err != nil {
 		return nil, err
 	}
+
+	reader := strings.NewReader(m.FormatURLParam(body))
 
 	req, err := http.NewRequest(http.MethodPost, c.Url(), reader)
 	if err != nil {

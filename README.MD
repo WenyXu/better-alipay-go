@@ -28,7 +28,7 @@ A better Alipay SDK for Golang. With First-class function, without the tears ðŸ˜
   - [Advanced](#advanced-usage)
 - [Hooks](#hooks)
 - [Tracing](#tracing)
-- [Built-in Methods constant and Response Structs](#built-in-methods-constant-and-response-structs)
+- [Built-in Methods constant and Response structs](#built-in-methods-constant-and-response-structs)
 - [Inspirited](#inspirited)
 
 
@@ -453,9 +453,9 @@ func main() {
 }
 ```
 
-## Built-in Methods constant and Response Structs
+## Built-in Methods constant and Response structs
 
-Following method:
+Following methods:
 
 ```
         // https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.enterinfo.sync
