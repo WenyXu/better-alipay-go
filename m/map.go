@@ -115,7 +115,7 @@ func EncodeMapParams(m map[string]interface{}) string {
 	return buf.String()[:buf.Len()-1]
 }
 
-type MakeMapEndpoint func(M) (M, error)
+type MakeMapEndpoint func(M) error
 
 // CombineMakeMapEndpointFunc combine MakeMapEndpoint func
 func CombineMakeMapEndpointFunc(endpoint ...MakeMapEndpoint) (map[string]interface{}, error) {
@@ -124,7 +124,7 @@ func CombineMakeMapEndpointFunc(endpoint ...MakeMapEndpoint) (map[string]interfa
 	target := make(map[string]interface{})
 	var errs []error
 	for _, e := range endpoint {
-		_, err := e(target)
+		err := e(target)
 		if err != nil {
 			errs = append(errs, err)
 		}
