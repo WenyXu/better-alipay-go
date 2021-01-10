@@ -114,6 +114,28 @@ func (o Options) Copy() Options {
 	return o
 }
 
+func WithoutBizContentMakeReqFunc(ctx context.Context, method string, param m.M, c config.Config) (*http.Request, error) {
+	body, err := m.CombineMakeMapEndpointFunc(
+		config.SetMethod(method),
+		config.SetPublicParam(c),
+		config.SetOptionalParam(c),
+		m.MergeMap(param),
+		config.SignParam(c),
+	)
+
+	reader := strings.NewReader(m.FormatURLParam(body))
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, c.Url(), reader)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", global.ContentType)
+	return req, nil
+}
+
 // NewDefaultMakeReqFunc default make request func
 func NewDefaultMakeReqFunc(ctx context.Context, method string, param m.M, c config.Config) (*http.Request, error) {
 
@@ -168,6 +190,10 @@ func DefaultOptions(opts ...Option) Options {
 		append(
 			append(
 				[]Option{},
+				DefaultLocation,
+				DefaultCharset(),
+				DefaultFormat(),
+				DefaultVersion(),
 				SetAfterFunc(DefaultAfterFunc),
 				SetBeforeFunc(DefaultBeforeFunc),
 				SetLogger(DefaultLogger),
@@ -463,5 +489,12 @@ func PublicCertSn(sn string) Option {
 func Production(input bool) Option {
 	return func(options *Options) {
 		options.Config.Production = input
+	}
+}
+
+// SetMakeReqFunc set MakeRequestFunc
+func SetMakeReqFunc(f MakeReqFunc) Option {
+	return func(options *Options) {
+		options.MakeReq = f
 	}
 }

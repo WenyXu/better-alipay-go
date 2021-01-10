@@ -130,17 +130,7 @@ func New(opts ...options.Option) Service {
 //				)
 func Default(opts ...options.Option) Service {
 	return newService(func(s *service) {
-		s.opts = options.DefaultOptions(
-			append(
-				append(
-					[]options.Option{},
-					options.DefaultLocation,
-					options.DefaultCharset(),
-					options.DefaultFormat(),
-					options.DefaultVersion(),
-				), opts...,
-			)...,
-		)
+		s.opts = options.DefaultOptions(opts...)
 	})
 }
 

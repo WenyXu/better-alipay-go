@@ -8,6 +8,7 @@ package entity
 
 type AlipaySystemOauthTokenResponse struct {
 	AlipaySystemOauthToken `json:"alipay_system_oauth_token_response"`
+	ErrorResponse          `json:"error_response"`
 	AlipayCertSn           string `json:"alipay_cert_sn"`
 	Sign                   string `json:"sign"`
 }
@@ -15,7 +16,7 @@ type AlipaySystemOauthTokenResponse struct {
 type AlipaySystemOauthToken struct {
 	UserID       string `json:"user_id"`
 	AccessToken  string `json:"access_token"`
-	ExpiresIn    string `json:"expires_in"`
+	ExpiresIn    int64  `json:"expires_in"`
 	RefreshToken string `json:"refresh_token"`
-	ReExpiresIn  string `json:"re_expires_in"`
+	ReExpiresIn  int64  `json:"re_expires_in"`
 }

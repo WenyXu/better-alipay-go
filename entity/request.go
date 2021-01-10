@@ -8,6 +8,17 @@ package entity
 
 import "github.com/pkg/errors"
 
+type ErrorResponse struct {
+	Code    string `json:"code"`
+	Msg     string `json:"msg"`
+	SubCode string `json:"sub_code"`
+	SubMsg  string `json:"sub_msg"`
+}
+
+func (c ErrorResponse) Failed() bool {
+	return c.Code != ""
+}
+
 type Common struct {
 	Code    string `json:"code"`
 	Msg     string `json:"msg"`
@@ -15,12 +26,12 @@ type Common struct {
 	SubMsg  string `json:"sub_msg"`
 }
 
-func (c Common) success() bool {
+func (c Common) Success() bool {
 	return c.Code == "10000"
 }
 
-func (c Common) errorWrap(err error) error {
-	if err != nil || !c.success() {
+func (c Common) ErrorWrap(err error) error {
+	if err != nil || !c.Success() {
 		if err != nil {
 			return errors.Wrap(err, c.Msg)
 		}

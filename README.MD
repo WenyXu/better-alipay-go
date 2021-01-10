@@ -28,7 +28,9 @@ A better Alipay SDK for Golang. With First-class function, without the tears �
   - [Advanced](#advanced-usage)
 - [Hooks](#hooks)
 - [Tracing](#tracing)
+- [Built-in Methods constant and Response Structs](#built-in-methods-constant-and-response-structs)
 - [Inspirited](#inspirited)
+
 
 ## Installation
 To install Better-Alipay-Go package, you need to install Go and set your Go workspace first.
@@ -89,13 +91,24 @@ func main(){
     // of course, you can using a struct instead
     // var resp AlipayTradeCreateResponse
     resp := make(map[string]interface{})
-    s.Request("alipay.trade.create",m.NewMap(func(param m.M) {
+    _ = s.Request("alipay.trade.create",m.NewMap(func(param m.M) {
           param.
               Set("subject", "网站测试支付").
               Set("buyer_id", "2088802095984694").
               Set("out_trade_no", "123456786543").
               Set("total_amount", "88.88"),
     }), &resp)
+
+    // without biz-content request
+    _ = s.Request(global.AlipaySystemOauthToken, m.NewMap(func(param m.M) {
+        // set key value as public params 
+    	param.
+        	Set("grant_type", "authorization_code").
+        	Set("code", "3a06216ac8f84b8c93507bb9774bWX11")
+    }),
+        &resp,
+        options.SetMakeReqFunc(options.WithoutBizContentMakeReqFunc),
+    )
 	
 }
     
@@ -163,7 +176,7 @@ func newOptions(opts ...Option) Options {
 
 If your application have multiple configurations, you can configure configuration dynamically.
 
-When you call Request func, it will make a copy form your current Options, then modify the Options. generally, it will be thread-safe.
+When you call the Request func, it will make a copy form your current Options, then modify the Options. generally, it will be thread-safe.
 
 ### Basic Usage 
 
@@ -391,7 +404,7 @@ func (s service) Request(method string, param m.M, response interface{}, opts ..
 ```
 
 ## Tracing
-You can inject context, when you call a Request func, and use hook to finish the tracing.
+You can inject context, when your call a Request func, and use hook to finish the tracing.
 
 ```go
 package main
@@ -418,7 +431,7 @@ func main() {
 			Set("total_amount", "88.88")
 	}),
 	&resp,
-	// inject you tracing context
+	// inject your tracing context
 	func(trace opentracing.Tracer) options.Option {
 		return func(o *options.Options) {
 			sp := opentracing.StartSpan("tarcing name")
@@ -439,6 +452,132 @@ func main() {
 
 }
 ```
+
+## Built-in Methods constant and Response Structs
+
+Following method:
+
+```
+        // https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.enterinfo.sync
+	AlipayEcoMyCarParkingEnterInfoSync = "alipay.eco.mycar.parking.enterinfo.sync"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.exitinfo.sync
+	AlipayEcoMyCarParkingExitInfoSync = "alipay.eco.mycar.parking.exitinfo.sync"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.vehicle.query
+	AlipayEcoMyCarParkingVehicleQuery = "alipay.eco.mycar.parking.vehicle.query"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.order.sync
+	AlipayEcoMyCarParkingOrderSync = "alipay.eco.mycar.parking.order.sync"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.order.update
+	AlipayEcoMyCarParkingOrderUpdate = "alipay.eco.mycar.parking.order.update"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.config.set
+	AlipayEcoMyCarParkingConfigSet = "alipay.eco.mycar.parking.config.set"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.parkinglotinfo.update
+	AlipayEcoMyCarParkingParkingLotInfoUpdate = "alipay.eco.mycar.parking.parkinglotinfo.update"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.parkinglotinfo.create
+	AlipayEcoMyCarParkingParkingLotInfoCreate = "alipay.eco.mycar.parking.parkinglotinfo.create"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.parkinglotinfo.query
+	AlipayEcoMyCarParkingParkingLotInfoQuery = "alipay.eco.mycar.parking.parkinglotinfo.query"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.order.pay
+	AlipayEcoMyCarParkingOrderPay = "alipay.eco.mycar.parking.order.pay"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.trade.order.query
+	AlipayEcoMyCarTradeOrderQuery = "alipay.eco.mycar.trade.order.query"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.agreement.query
+	AlipayEcoMyCarParkingAgreement = "alipay.eco.mycar.parking.agreement.query"
+
+	// https://opendocs.alipay.com/apis/api_9/alipay.user.info.auth
+	AlipayUserInfoAuth = "alipay.user.info.auth"
+
+	// https://opendocs.alipay.com/apis/api_9/alipay.system.oauth.token
+	AlipaySystemOauthToken = "alipay.system.oauth.token"
+
+	// https://opendocs.alipay.com/apis/api_9/alipay.open.auth.token.app
+	AlipayOpenAuthTokenApp = "alipay.open.auth.token.app"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.page.pay
+	AlipayTradePagePay = "alipay.trade.page.pay"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.app.pay
+	AlipayTradeAppPay = "alipay.trade.app.pay"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.wap.pay
+	AlipayTradeWapPay = "alipay.trade.wap.pay"
+
+	// https://opendocs.alipay.com/apis/api_2/alipay.user.certify.open.certify
+	AlipayUserCertifyOpenCertify = "alipay.user.certify.open.certify"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.fastpay.refund.query
+	AlipayTradeFastpayRefundQuery = "alipay.trade.fastpay.refund.query"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.order.settle
+	AlipayTradeOrderSettle = "alipay.trade.order.settle"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.create
+	AlipayTradeCreate = "alipay.trade.create"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.close
+	AlipayTradeClose = "alipay.trade.close"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.cancel
+	AlipayTradeCancel = "alipay.trade.cancel"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.refund
+	AlipayTradeRefund = "alipay.trade.refund"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.page.trade.refund
+	AlipayTradePageRefund = "alipay.trade.page.refund"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.precreate
+	AlipayTradePrecreate = "alipay.trade.precreate"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.query
+	AlipayTradeQuery = "alipay.trade.query"
+
+	// https://opendocs.alipay.com/apis/api_28/alipay.fund.trans.toaccount.transfer
+	AlipayFundTransToAccountTransfer = "alipay.fund.trans.toaccount.transfer"
+
+	// https://opendocs.alipay.com/apis/api_28/alipay.fund.trans.uni.transfer
+	AlipayFundTransUniTransfer = "alipay.fund.trans.uni.transfer"
+
+	// https://opendocs.alipay.com/apis/api_28/alipay.fund.trans.common.query
+	AlipayFundTransCommonQuery = "alipay.fund.trans.common.query"
+
+	// https://opendocs.alipay.com/apis/api_28/alipay.fund.account.query
+	AlipayFundAccountQuery = "alipay.fund.account.query"
+
+	// https://opendocs.alipay.com/apis/api_2/alipay.user.info.share
+	AlipayUserInfoShare = "alipay.user.info.share"
+
+	// https://opendocs.alipay.com/apis/api_8/zhima.credit.score.get
+	ZhimaCreditScoreGet = "zhima.credit.score.get"
+
+	// https://opendocs.alipay.com/apis/api_2/alipay.user.certify.open.initialize
+	AlipayUserCertifyOpenInitialize = "alipay.user.certify.open.initialize"
+
+	// https://opendocs.alipay.com/apis/api_2/alipay.user.certify.open.query
+	AlipayUserCertifyOpenQuery = "alipay.user.certify.open.query"
+```
+
+You can use Success() func of these structs to check if the response return successfully
+
+```go
+    ...
+    var resp AlipayTradeCreate
+    ...
+    if resp.Success() {
+    	....
+    }   
+```
+
 
 ## Inspirited
 - [iGoogle-ink/gopay](https://github.com/iGoogle-ink/gopay)
