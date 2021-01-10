@@ -91,13 +91,24 @@ func main(){
     // of course, you can using a struct instead
     // var resp AlipayTradeCreateResponse
     resp := make(map[string]interface{})
-    s.Request("alipay.trade.create",m.NewMap(func(param m.M) {
+    _ = s.Request("alipay.trade.create",m.NewMap(func(param m.M) {
           param.
               Set("subject", "网站测试支付").
               Set("buyer_id", "2088802095984694").
               Set("out_trade_no", "123456786543").
               Set("total_amount", "88.88"),
     }), &resp)
+
+    // without biz-content request
+    _ = s.Request(global.AlipaySystemOauthToken, m.NewMap(func(param m.M) {
+        // set key value as public params 
+    	param.
+        	Set("grant_type", "authorization_code").
+        	Set("code", "3a06216ac8f84b8c93507bb9774bWX11")
+    }),
+        &resp,
+        options.SetMakeReqFunc(options.WithoutBizContentMakeReqFunc),
+    )
 	
 }
     
