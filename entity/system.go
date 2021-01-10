@@ -20,7 +20,7 @@ type AlipaySystemOauthTokenResponse struct {
 type AlipaySystemOauthToken struct {
 	UserID       string `json:"user_id"`
 	AccessToken  string `json:"access_token"`
-	ExpiresIn    string `json:"expires_in"`
+	ExpiresIn    int64  `json:"expires_in"`
 	RefreshToken string `json:"refresh_token"`
-	ReExpiresIn  string `json:"re_expires_in"`
+	ReExpiresIn  int64  `json:"re_expires_in"`
 }
