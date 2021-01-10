@@ -168,6 +168,10 @@ func DefaultOptions(opts ...Option) Options {
 		append(
 			append(
 				[]Option{},
+				DefaultLocation,
+				DefaultCharset(),
+				DefaultFormat(),
+				DefaultVersion(),
 				SetAfterFunc(DefaultAfterFunc),
 				SetBeforeFunc(DefaultBeforeFunc),
 				SetLogger(DefaultLogger),
