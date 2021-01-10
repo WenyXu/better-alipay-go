@@ -25,4 +25,61 @@ const (
 
 	AppToAppAuthUrlProduction  = "https://openauth.alipay.com/oauth2/appToAppAuth.htm"    // 正式环境第三方授权登录地址
 	AppToAppAuthUrlDevelopment = "https://openauth.alipaydev.com/oauth2/appToAppAuth.htm" // 沙箱环境第三方授权登录地址
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.enterinfo.sync
+	AlipayEcoMyCarParkingEnterInfoSync = "alipay.eco.mycar.parking.enterinfo.sync"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.exitinfo.sync
+	AlipayEcoMyCarParkingExitInfoSync = "alipay.eco.mycar.parking.exitinfo.sync"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.vehicle.query
+	AlipayEcoMyCarParkingVehicleQuery = "alipay.eco.mycar.parking.vehicle.query"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.order.sync
+	AlipayEcoMyCarParkingOrderSync = "alipay.eco.mycar.parking.order.sync"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.order.update
+	AlipayEcoMyCarParkingOrderUpdate = "alipay.eco.mycar.parking.order.update"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.config.set
+	AlipayEcoMyCarParkingConfigSet = "alipay.eco.mycar.parking.config.set"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.parkinglotinfo.update
+	AlipayEcoMyCarParkingParkingLotInfoUpdate = "alipay.eco.mycar.parking.parkinglotinfo.update"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.parkinglotinfo.create
+	AlipayEcoMyCarParkingParkingLotInfoCreate = "alipay.eco.mycar.parking.parkinglotinfo.create"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.parkinglotinfo.query
+	AlipayEcoMyCarParkingParkingLotInfoQuery = "alipay.eco.mycar.parking.parkinglotinfo.query"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.order.pay
+	AlipayEcoMyCarParkingOrderPay = "alipay.eco.mycar.parking.order.pay"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.trade.order.query
+	AlipayEcoMyCarTradeOrderQuery = "alipay.eco.mycar.trade.order.query"
+
+	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.agreement.query
+	AlipayEcoMyCarParkingAgreement = "alipay.eco.mycar.parking.agreement.query"
+
+	// https://opendocs.alipay.com/apis/api_9/alipay.user.info.auth
+	AlipayUserInfoAuth = "alipay.user.info.auth"
+
+	// https://opendocs.alipay.com/apis/api_9/alipay.system.oauth.token
+	AlipaySystemOauthToken = "alipay.system.oauth.token"
+
+	// https://opendocs.alipay.com/apis/api_9/alipay.open.auth.token.app
+	AlipayOpenAuthTokenApp = "alipay.open.auth.token.app"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.page.pay
+	AlipayTradePagePay = "alipay.trade.page.pay"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.app.pay
+	AlipayTradeAppPay = "alipay.trade.app.pay"
+
+	// https://opendocs.alipay.com/apis/api_1/alipay.trade.wap.pay
+	AlipayTradeWapPay = "alipay.trade.wap.pay"
+
+	// https://opendocs.alipay.com/apis/api_2/alipay.user.certify.open.certify
+	AlipayUserCertifyOpenCertify = "alipay.user.certify.open.certify"
 )

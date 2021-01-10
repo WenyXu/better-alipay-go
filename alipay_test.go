@@ -12,7 +12,7 @@ import (
 	"testing"
 
 	"github.com/WenyXu/better-alipay-go/global"
-	_map "github.com/WenyXu/better-alipay-go/m"
+	"github.com/WenyXu/better-alipay-go/m"
 	"github.com/WenyXu/better-alipay-go/options"
 
 	"github.com/joho/godotenv"
@@ -43,9 +43,8 @@ func TestMain(m *testing.M) {
 }
 
 func TestService_Request(t *testing.T) {
-
 	resp := make(map[string]interface{})
-	err := s.Request("alipay.trade.create", _map.NewMap(func(m _map.M) {
+	err := s.Request("alipay.trade.create", m.NewMap(func(m m.M) {
 		m.
 			Set("subject", "网站测试支付").
 			Set("buyer_id", "2088802095984694").
@@ -53,7 +52,7 @@ func TestService_Request(t *testing.T) {
 			Set("total_amount", "88.88")
 	}), &resp, options.SetAfterFunc(options.EmptyAfterFunc))
 
-	_ = s.Request("alipay.trade.create", _map.NewMap(func(m _map.M) {
+	_ = s.Request("alipay.trade.create", m.NewMap(func(m m.M) {
 		m.
 			Set("subject", "网站测试支付").
 			Set("buyer_id", "2088802095984694").
@@ -63,5 +62,34 @@ func TestService_Request(t *testing.T) {
 
 	assert.Equal(t, err, nil)
 	//fmt.Println(resp)
+}
 
+func TestService_Request_Trade_Page_Pay(t *testing.T) {
+	// same as
+	// alipay.trade.wap.pay
+	// alipay.trade.page.pay
+	// alipay.user.certify.open.certify
+	data, err := s.MakeParam(global.AlipayTradePagePay, m.NewMap(func(param m.M) {
+		param.Set("subject", "网站测试支付").
+			Set("product_code", "FAST_INSTANT_TRADE_PAY").
+			Set("out_trade_no", "123456789").
+			Set("total_amount", "88.88")
+	}))
+	assert.Equal(t, nil, err)
+	url := s.Options().Config.Url() + "?" + m.FormatURLParam(data)
+
+	// page pay url
+	fmt.Println(url)
+}
+
+func TestService_Request_App_Pay(t *testing.T) {
+	// alipay.trade.app.pay
+	data, err := s.MakeParam(global.AlipayTradeAppPay, m.NewMap(func(param m.M) {
+		param.Set("subject", "app支付").
+			Set("out_trade_no", "123456789").
+			Set("total_amount", "88.88")
+	}))
+	assert.Equal(t, nil, err)
+	// output
+	fmt.Println(data)
 }
