@@ -11,12 +11,13 @@ package m
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/url"
 	"sort"
 	"strings"
 
-	"github.com/WenyXu/better-alipay-go/errors"
+	errorsMsg "github.com/WenyXu/better-alipay-go/errors"
 )
 
 type M map[string]interface{}
@@ -130,7 +131,7 @@ func CombineMakeMapEndpointFunc(endpoint ...MakeMapEndpoint) (map[string]interfa
 		}
 	}
 	if len(errs) != 0 {
-		return target, errors.FormatErrors(errs...)
+		return target, errorsMsg.FormatErrors(errs...)
 	}
 	return target, nil
 }
@@ -142,4 +143,16 @@ func FormatURLParam(m map[string]interface{}) (urlParam string) {
 		v.Add(key, value.(string))
 	}
 	return v.Encode()
+}
+
+func MergeMap(source map[string]interface{}) MakeMapEndpoint {
+	return func(target M) error {
+		if source == nil {
+			return errors.New("source is nil")
+		}
+		for k, v := range source {
+			target[k] = v
+		}
+		return nil
+	}
 }

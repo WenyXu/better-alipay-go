@@ -11,6 +11,8 @@ import (
 	"os"
 	"testing"
 
+	"github.com/WenyXu/better-alipay-go/entity"
+
 	"github.com/WenyXu/better-alipay-go/global"
 	"github.com/WenyXu/better-alipay-go/m"
 	"github.com/WenyXu/better-alipay-go/options"
@@ -92,4 +94,28 @@ func TestService_Request_App_Pay(t *testing.T) {
 	assert.Equal(t, nil, err)
 	// output
 	fmt.Println(data)
+}
+
+func TestService_Request_AlipaySystemOauthToken(t *testing.T) {
+	var resp entity.AlipaySystemOauthTokenResponse
+	err := s.Request(global.AlipaySystemOauthToken, m.NewMap(func(m m.M) {
+		m.Set("grant_type", "authorization_code").Set("code", "3a06216ac8f84b8c93507bb9774bWX11")
+	}), &resp,
+		options.SetMakeReqFunc(
+			options.WithoutBizContentMakeReqFunc,
+		),
+	)
+	assert.Equal(t, nil, err)
+	fmt.Println(resp)
+
+	var r2 map[string]interface{}
+	err = s.Request("alipay.trade.create", m.NewMap(func(m m.M) {
+		m.
+			Set("subject", "网站测试支付").
+			Set("buyer_id", "2088802095984694").
+			Set("out_trade_no", "123456786543").
+			Set("total_amount", "88.88")
+	}), &r2)
+	assert.Equal(t, nil, err)
+	fmt.Println(r2)
 }
