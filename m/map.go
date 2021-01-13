@@ -53,8 +53,8 @@ func mergeOptions(opts ...MapOptions) MapOptions {
 func (m M) Set(key string, value interface{}, opts ...MapOptions) M {
 	mergedOption := mergeOptions(opts...)
 	switch value.(type) {
-	case func(map[string]interface{}):
-		value.(func(map[string]interface{}))(m)
+	case func(M):
+		value.(func(M))(m)
 	case string:
 		if mergedOption.IgnoreEmptyString != nil {
 			if *mergedOption.IgnoreEmptyString == true {
