@@ -273,10 +273,10 @@ type TradeOrderSettle struct {
 // TradePrecreateResponse
 // https://opendocs.alipay.com/apis/api_1/alipay.trade.precreate
 type TradePrecreateResponse struct {
-	Response     *TradePrecreate `json:"alipay_trade_precreate_response"`
-	NullResponse *ErrorResponse  `json:"null_response"`
-	AlipayCertSn string          `json:"alipay_cert_sn"`
-	Sign         string          `json:"sign"`
+	TradePrecreate `json:"alipay_trade_precreate_response"`
+	NullResponse   *ErrorResponse `json:"null_response"`
+	AlipayCertSn   string         `json:"alipay_cert_sn"`
+	Sign           string         `json:"sign"`
 }
 
 type TradePrecreate struct {
