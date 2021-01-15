@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 
@@ -223,8 +224,11 @@ func DefaultBeforeFunc(ctx context.Context, req *http.Request) context.Context {
 		fmt.Printf("Read Request body with error: %s", err.Error())
 		return ctx
 	}
+	enEscapeUrl, err := url.QueryUnescape(string(body))
+	if err == nil {
+		fmt.Println(string(enEscapeUrl))
+	}
 	req.Body = ioutil.NopCloser(bytes.NewBuffer(body))
-	fmt.Println(string(body))
 	return ctx
 }
 
