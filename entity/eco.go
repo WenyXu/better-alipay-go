@@ -14,7 +14,7 @@ type EnterInfo struct {
 
 type EnterInfoResponse struct {
 	EnterInfo `json:"alipay_eco_mycar_parking_enterinfo_sync_response"`
-	Sign              string `json:"sign"`
+	Sign      string `json:"sign"`
 }
 
 type ExitInfoResponse struct {
@@ -29,7 +29,7 @@ type VehicleQuery struct {
 
 type VehicleQueryResponse struct {
 	VehicleQuery `json:"alipay_eco_mycar_parking_vehicle_query_response"`
-	Sign                 string `json:"sign"`
+	Sign         string `json:"sign"`
 }
 
 type OrderSyncResponse struct {
@@ -56,7 +56,7 @@ type ConfigQuery struct {
 
 type ConfigQueryResponse struct {
 	ConfigQuery `json:"alipay_eco_mycar_parking_config_query_response"`
-	Sign                string `json:"sign"`
+	Sign        string `json:"sign"`
 }
 
 type ConfigSetResponse struct {
@@ -76,7 +76,7 @@ type ParkingInfoCreate struct {
 
 type ParkingInfoCreateResponse struct {
 	ParkingInfoCreate `json:"alipay_eco_mycar_parking_parkinglotinfo_create_response"`
-	Sign                      string `json:"sign"`
+	Sign              string `json:"sign"`
 }
 
 type ParkingOrderPay struct {
@@ -93,7 +93,7 @@ type ParkingOrderPay struct {
 
 type ParkingOrderPayResponse struct {
 	ParkingOrderPay `json:"alipay_eco_mycar_parking_order_pay_response"`
-	Sign                    string `json:"sign"`
+	Sign            string `json:"sign"`
 }
 
 type ParkingOrderQueryRequest struct {
@@ -127,17 +127,17 @@ type ParkingOrderQuery struct {
 
 type ParkingOrderQueryResponse struct {
 	ParkingOrderQuery `json:"alipay_eco_mycar_trade_order_query_response"`
-	Sign                      string `json:"sign"`
+	Sign              string `json:"sign"`
 }
 
 type AgreementQuery struct {
 	Common          `json:",inline"`
 	AgreementStatus string `json:"agreement_status"`
 	UserAdvanceInfo struct {
-		ConsultResponse                 string `json:"consult_result"`
+		ConsultResponse               string `json:"consult_result"`
 		UserAlipayParkingAllowAdvance bool   `json:"user_alipay_parking_allow_advance"`
 		UserWaitRepaymentOrderCount   int    `json:"user_wait_repayment_order_count"`
-		UserWaitRepaymentAmount       int    `json:"user_wait_repayment_amount"`
+		UserWaitRepaymentAmount       string `json:"user_wait_repayment_amount"`
 	} `json:"user_advance_info"`
 	AdvanceStatus string `json:"advance_status"`
 	ExpireTime    string `json:"expire_time"`
@@ -145,21 +145,21 @@ type AgreementQuery struct {
 
 type AgreementQueryResponse struct {
 	AgreementQuery `json:"alipay_eco_mycar_parking_agreement_query_response"`
-	Sign                   string `json:"sign"`
+	Sign           string `json:"sign"`
 }
 
 type ParkingInfoQuery struct {
-	Common         `json:",inline"`
-	OutParkingID   string `json:"out_parking_id"`
-	ParkingID      string `json:"parking_id"`
-	ParkingAddress string `json:"parking_address"`
-	ParkingLotType string `json:"parking_lot_type"`
-	ParkingPoiid   string `json:"parking_poiid"`
-	ParkingMobile  string `json:"parking_mobile"`
-	PayType        string `json:"pay_type"`
-	ParkingName    string `json:"parking_name"`
-	MchntID        string `json:"mchnt_id"`
-	ShopingmallID  string `json:"shopingmall_id"`
+	Common                   `json:",inline"`
+	OutParkingID             string `json:"out_parking_id"`
+	ParkingID                string `json:"parking_id"`
+	ParkingAddress           string `json:"parking_address"`
+	ParkingLotType           string `json:"parking_lot_type"`
+	ParkingPoiid             string `json:"parking_poiid"`
+	ParkingMobile            string `json:"parking_mobile"`
+	PayType                  string `json:"pay_type"`
+	ParkingName              string `json:"parking_name"`
+	MchntID                  string `json:"mchnt_id"`
+	ShopingmallID            string `json:"shopingmall_id"`
 	ParkingFeeDescription    string `json:"parking_fee_description"`
 	TimeOut                  string `json:"time_out"`
 	AgentID                  string `json:"agent_id"`
@@ -175,7 +175,7 @@ type ParkingInfoQuery struct {
 
 type ParkingInfoQueryResponse struct {
 	ParkingInfoQuery `json:"alipay_eco_mycar_parking_parkinglotinfo_query_response"`
-	Sign                     string `json:"sign"`
+	Sign             string `json:"sign"`
 }
 
 type OpenAuthToken struct {
@@ -190,5 +190,5 @@ type OpenAuthToken struct {
 
 type OpenAuthTokenResponse struct {
 	OpenAuthToken `json:"alipay_open_auth_token_app_response"`
-	Sign                  string `json:"sign"`
+	Sign          string `json:"sign"`
 }
