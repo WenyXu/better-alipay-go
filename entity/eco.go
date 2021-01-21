@@ -81,14 +81,14 @@ type ParkingInfoCreateResponse struct {
 
 type ParkingOrderPay struct {
 	Common             `json:",inline"`
-	UserID             string  `json:"user_id"`
-	TradeNo            string  `json:"trade_no"`
-	OutTradeNo         string  `json:"out_trade_no"`
-	TotalFee           float64 `json:"total_fee"`
-	GmtPayment         string  `json:"gmt_payment"`
-	FundBillList       string  `json:"fund_bill_list"`
-	AdvanceAmount      float64 `json:"advance_amount"`
-	AlipayRepaymentURL string  `json:"alipay_repayment_url"`
+	UserID             string `json:"user_id"`
+	TradeNo            string `json:"trade_no"`
+	OutTradeNo         string `json:"out_trade_no"`
+	TotalFee           string `json:"total_fee"`
+	GmtPayment         string `json:"gmt_payment"`
+	FundBillList       string `json:"fund_bill_list"`
+	AdvanceAmount      string `json:"advance_amount"`
+	AlipayRepaymentURL string `json:"alipay_repayment_url"`
 }
 
 type ParkingOrderPayResponse struct {
