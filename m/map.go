@@ -56,6 +56,7 @@ func (m M) Set(key string, value interface{}, opts ...MapOptions) M {
 	case func(M):
 		_m := make(M)
 		value.(func(M))(_m)
+		m[key] = _m
 	case string:
 		if mergedOption.IgnoreEmptyString != nil {
 			if *mergedOption.IgnoreEmptyString == true {
