@@ -192,3 +192,16 @@ type OpenAuthTokenResponse struct {
 	OpenAuthToken `json:"alipay_open_auth_token_app_response"`
 	Sign          string `json:"sign"`
 }
+
+type ParkingOrderRefund struct {
+	Common      `json:",inline"`
+	RefundNo    string `json:"refund_no"`
+	OrderNo     string `json:"order_no"`
+	OutRefundNo string `json:"out_refund_no"`
+	RefundFee   string `json:"refund_fee"`
+}
+
+type ParkingOrderRefundResponse struct {
+	ParkingOrderRefund `json:"alipay_eco_mycar_parking_order_refund_response"`
+	Sign               string `json:"sign"`
+}
