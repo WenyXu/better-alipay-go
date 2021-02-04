@@ -27,8 +27,16 @@ import (
 	m "github.com/WenyXu/better-alipay-go/m"
 )
 
+func InitTransport() http.RoundTripper {
+	t := http.DefaultTransport.(*http.Transport).Clone()
+	t.MaxIdleConns = 100
+	t.MaxIdleConnsPerHost = 100
+	t.MaxConnsPerHost = 100
+	return t
+}
+
 var (
-	DefaultTransport                 = http.DefaultTransport
+	DefaultTransport                 = InitTransport()
 	DefaultMakeReqFunc MakeReqFunc   = NewDefaultMakeReqFunc
 	DefaultDecFunc     DecFunc       = NewDefaultDecFunc
 	DefaultLocation                  = NewDefaultLocation()
