@@ -56,6 +56,9 @@ const (
 	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.parking.order.pay
 	AlipayEcoMyCarParkingOrderPay = "alipay.eco.mycar.parking.order.pay"
 
+	// https://opendocs.alipay.com/apis/00tdbu
+	AlipayEcoMyCarParkingOrderRefund = "alipay.eco.mycar.parking.order.refund"
+
 	// https://opendocs.alipay.com/apis/api_19/alipay.eco.mycar.trade.order.query
 	AlipayEcoMyCarTradeOrderQuery = "alipay.eco.mycar.trade.order.query"
 
