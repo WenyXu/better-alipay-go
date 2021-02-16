@@ -240,7 +240,6 @@ Configure with func which implement options.Option.
         // use custom option in New or Default func 
 		s := alipay.Default(
 			...,
-		    CustomOption
         )
         // or use custom option in Request of MakeParam func 
         s.Request("alipay.trade.create",m.NewMap(func(param m.M) {
