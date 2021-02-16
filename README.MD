@@ -10,12 +10,14 @@ A better Alipay SDK for Golang. With First-class function, without the tears �
 - Dynamic configuration friendly
 - Multiple configuration friendly
 
-一个更好的支付宝（Alipay）SDK。函数优先，没有眼泪😢
+一个更好的支付宝（Alipay）SDK。函数优先，没有眼泪😢 [中文文档](http://better-alipay-go.terminal.im/)
+
 - 多线程安全
 - Hooks
 - 链路跟踪
 - 动态配置
 - 多个配置
+
 
 ## Contents
 
@@ -35,7 +37,7 @@ A better Alipay SDK for Golang. With First-class function, without the tears �
 ## Installation
 To install Better-Alipay-Go package, you need to install Go and set your Go workspace first.
 
-1. The first need [Go](https://golang.org/) installed, then you can use the below Go command to install Gin.
+1. The first need [Go](https://golang.org/) installed, then you can use the below Go command to install it.
 
 ```sh
 $ go get -u github.com/WenyXu/better-alipay-go
@@ -141,7 +143,7 @@ func main() {
 	// set Default MakeRequestFunc which implement options.MakeRequestFunc func
 	options.SetDefaultMakeReqFunc(yourMakeReqFunc)
 
-	// set Default MakeRequestFunc which implement options.DecFunc func
+	// set Default DecFunc which implement options.DecFunc func
 	options.SetDefaultDecFunc(yourDecFunc)
 	
 	// set Default Logger which implement logger.Logger interface
@@ -153,7 +155,7 @@ func main() {
 
 ```
 
-After above configuring, options.newOptions will return new Options with your configured.
+After above configuring, alipay.New / alipay.Default / options.newOptions will return new Options with your configured.
 
 ```go
 // options.go 
