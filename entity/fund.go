@@ -23,9 +23,9 @@ type FundTransToAccountTransfer struct {
 // FundTransUniTransferResponse
 // https://opendocs.alipay.com/apis/api_28/alipay.fund.trans.uni.transfer
 type FundTransUniTransferResponse struct {
-	Response     FundTransUniTransfer `json:"alipay_fund_trans_uni_transfer_response"`
-	AlipayCertSn string               `json:"alipay_cert_sn"`
-	Sign         string               `json:"sign"`
+	FundTransUniTransfer `json:"alipay_fund_trans_uni_transfer_response"`
+	AlipayCertSn         string `json:"alipay_cert_sn"`
+	Sign                 string `json:"sign"`
 }
 
 type FundTransUniTransfer struct {

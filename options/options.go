@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 
@@ -26,8 +27,16 @@ import (
 	m "github.com/WenyXu/better-alipay-go/m"
 )
 
+func InitTransport() http.RoundTripper {
+	t := http.DefaultTransport.(*http.Transport).Clone()
+	t.MaxIdleConns = 100
+	t.MaxIdleConnsPerHost = 100
+	t.MaxConnsPerHost = 100
+	return t
+}
+
 var (
-	DefaultTransport                 = http.DefaultTransport
+	DefaultTransport                 = InitTransport()
 	DefaultMakeReqFunc MakeReqFunc   = NewDefaultMakeReqFunc
 	DefaultDecFunc     DecFunc       = NewDefaultDecFunc
 	DefaultLocation                  = NewDefaultLocation()
@@ -223,8 +232,11 @@ func DefaultBeforeFunc(ctx context.Context, req *http.Request) context.Context {
 		fmt.Printf("Read Request body with error: %s", err.Error())
 		return ctx
 	}
+	enEscapeUrl, err := url.QueryUnescape(string(body))
+	if err == nil {
+		fmt.Println(string(enEscapeUrl))
+	}
 	req.Body = ioutil.NopCloser(bytes.NewBuffer(body))
-	fmt.Println(string(body))
 	return ctx
 }
 
