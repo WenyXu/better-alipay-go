@@ -48,12 +48,12 @@ func (s service) MakeParam(method string, param m.M, opts ...options.Option) (da
 // Do Request
 func (s service) Request(method string, param m.M, response interface{}, opts ...options.Option) (err error) {
 	copyOpts := s.opts.Copy()
-	ctx, cancel := context.WithCancel(copyOpts.Context)
-	defer cancel()
 	// setup options
 	for _, o := range opts {
 		o(&copyOpts)
 	}
+	ctx, cancel := context.WithCancel(copyOpts.Context)
+	defer cancel()
 
 	// make request
 	req, err := copyOpts.MakeReq(ctx, method, param, copyOpts.Config)
